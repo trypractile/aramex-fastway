@@ -1,8 +1,45 @@
 {
   "name": "aramex-fastway",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Quote, book, label, track and cancel Aramex (formerly Fastway) shipments in Australia and New Zealand from Claude Code.",
-  "author": { "name": "Practile" },
+  "author": {
+    "name": "Practile"
+  },
   "license": "MIT",
-  "keywords": ["aramex", "fastway", "shipping", "courier", "logistics", "australia", "new-zealand"]
+  "keywords": [
+    "aramex",
+    "fastway",
+    "shipping",
+    "courier",
+    "logistics",
+    "australia",
+    "new-zealand"
+  ],
+  "userConfig": {
+    "aramex_client_id": {
+      "type": "string",
+      "title": "Aramex client ID",
+      "description": "API client ID from your MyFastway / Aramex portal (API Keys)",
+      "required": false,
+      "sensitive": true
+    },
+    "aramex_client_secret": {
+      "type": "string",
+      "title": "Aramex client secret",
+      "description": "API client secret from your MyFastway / Aramex portal",
+      "required": false,
+      "sensitive": true
+    },
+    "aramex_region": {
+      "type": "string",
+      "title": "Region",
+      "description": "au for Australia, nz for New Zealand",
+      "required": false,
+      "default": "au",
+      "options": [
+        "au",
+        "nz"
+      ]
+    }
+  }
 }

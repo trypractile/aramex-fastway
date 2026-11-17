@@ -8,23 +8,30 @@ Quote, book, label, track and cancel **Aramex Australia / New Zealand** shipment
 
 ## Setup
 
-1. In the MyFastway / Aramex customer portal, create an API key (client ID and secret).
-2. Export the credentials in the shell that launches Claude Code, or add them to the `env` block of `~/.claude/settings.json`:
+### Option 1: Claude desktop app (no terminal)
 
-   ```bash
-   export ARAMEX_CLIENT_ID=...
-   export ARAMEX_CLIENT_SECRET=...
-   export ARAMEX_REGION=au   # or nz
-   ```
+1. Open the **Code** tab and start a local session.
+2. In the prompt box, type `/plugin marketplace add trypractile/aramex-fastway` and press Enter.
+3. Click **+** next to the prompt box, then **Add plugins** (or **Plugins → Browse plugins**), choose **aramex-fastway** and click Install.
+4. When asked, paste your **Aramex client ID** and **client secret**, and pick the region (`au` or `nz`). The secret is saved in your computer's secure credential store, not in a settings file.
+5. Start a new session and try `/aramex-track <label number>`.
 
-3. Install the plugin:
+To change the key later, type `/plugin configure aramex-fastway@practile-plugins`.
 
-   ```bash
-   claude plugin marketplace add trypractile/aramex-fastway
-   claude plugin install aramex-fastway@practile-plugins
-   ```
+### Option 2: terminal
+
+```bash
+claude plugin marketplace add trypractile/aramex-fastway
+claude plugin install aramex-fastway@practile-plugins --config aramex_client_id=YOUR_ID --config aramex_client_secret=YOUR_SECRET --config aramex_region=au
+```
+
+### Getting an API key
+
+In the MyFastway / Aramex customer portal, create an API key. It gives you a client ID and a client secret. Your account must have API access enabled.
 
 The server is pre-bundled (`server/dist/index.mjs`), so installing it needs no `npm install`. It only needs Node 18 or later.
+
+You can also supply the key as the environment variables `ARAMEX_CLIENT_ID`, `ARAMEX_CLIENT_SECRET` and `ARAMEX_REGION`, which is useful in cloud environments. Values entered at install time take priority.
 
 ### Optional settings
 

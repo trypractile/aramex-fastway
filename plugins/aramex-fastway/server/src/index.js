@@ -81,7 +81,7 @@ function stripUndefined(obj) {
 
 // ---------- server ----------
 
-const server = new McpServer({ name: "aramex-fastway", version: "0.1.0" });
+const server = new McpServer({ name: "aramex-fastway", version: "0.2.0" });
 
 server.registerTool(
   "aramex_quote",

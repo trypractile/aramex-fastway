@@ -7421,9 +7421,9 @@ var util;
     }
     return void 0;
   };
-  util2.isInteger = typeof Number.isInteger === "function" ? (val) => Number.isInteger(val) : (val) => typeof val === "number" && Number.isFinite(val) && Math.floor(val) === val;
+  util2.isInteger = typeof Number.isInteger === "function" ? (val2) => Number.isInteger(val2) : (val2) => typeof val2 === "number" && Number.isFinite(val2) && Math.floor(val2) === val2;
   function joinValues2(array2, separator = " | ") {
-    return array2.map((val) => typeof val === "string" ? `'${val}'` : val).join(separator);
+    return array2.map((val2) => typeof val2 === "string" ? `'${val2}'` : val2).join(separator);
   }
   util2.joinValues = joinValues2;
   util2.jsonStringifyReplacer = (_, value) => {
@@ -8039,20 +8039,20 @@ var ZodType = class {
     return handleResult(ctx, result);
   }
   refine(check2, message) {
-    const getIssueProperties = (val) => {
+    const getIssueProperties = (val2) => {
       if (typeof message === "string" || typeof message === "undefined") {
         return { message };
       } else if (typeof message === "function") {
-        return message(val);
+        return message(val2);
       } else {
         return message;
       }
     };
-    return this._refinement((val, ctx) => {
-      const result = check2(val);
+    return this._refinement((val2, ctx) => {
+      const result = check2(val2);
       const setError = () => ctx.addIssue({
         code: ZodIssueCode.custom,
-        ...getIssueProperties(val)
+        ...getIssueProperties(val2)
       });
       if (typeof Promise !== "undefined" && result instanceof Promise) {
         return result.then((data) => {
@@ -8073,9 +8073,9 @@ var ZodType = class {
     });
   }
   refinement(check2, refinementData) {
-    return this._refinement((val, ctx) => {
-      if (!check2(val)) {
-        ctx.addIssue(typeof refinementData === "function" ? refinementData(val, ctx) : refinementData);
+    return this._refinement((val2, ctx) => {
+      if (!check2(val2)) {
+        ctx.addIssue(typeof refinementData === "function" ? refinementData(val2, ctx) : refinementData);
         return false;
       } else {
         return true;
@@ -8825,11 +8825,11 @@ ZodString.create = (params) => {
     ...processCreateParams(params)
   });
 };
-function floatSafeRemainder(val, step) {
-  const valDecCount = (val.toString().split(".")[1] || "").length;
+function floatSafeRemainder(val2, step) {
+  const valDecCount = (val2.toString().split(".")[1] || "").length;
   const stepDecCount = (step.toString().split(".")[1] || "").length;
   const decCount = valDecCount > stepDecCount ? valDecCount : stepDecCount;
-  const valInt = Number.parseInt(val.toFixed(decCount).replace(".", ""));
+  const valInt = Number.parseInt(val2.toFixed(decCount).replace(".", ""));
   const stepInt = Number.parseInt(step.toFixed(decCount).replace(".", ""));
   return valInt % stepInt / 10 ** decCount;
 }
@@ -10712,22 +10712,22 @@ var ZodEnum = class _ZodEnum extends ZodType {
   }
   get enum() {
     const enumValues = {};
-    for (const val of this._def.values) {
-      enumValues[val] = val;
+    for (const val2 of this._def.values) {
+      enumValues[val2] = val2;
     }
     return enumValues;
   }
   get Values() {
     const enumValues = {};
-    for (const val of this._def.values) {
-      enumValues[val] = val;
+    for (const val2 of this._def.values) {
+      enumValues[val2] = val2;
     }
     return enumValues;
   }
   get Enum() {
     const enumValues = {};
-    for (const val of this._def.values) {
-      enumValues[val] = val;
+    for (const val2 of this._def.values) {
+      enumValues[val2] = val2;
     }
     return enumValues;
   }
@@ -11414,11 +11414,11 @@ __export(util_exports, {
   stringifyPrimitive: () => stringifyPrimitive,
   unwrapMessage: () => unwrapMessage
 });
-function assertEqual(val) {
-  return val;
+function assertEqual(val2) {
+  return val2;
 }
-function assertNotEqual(val) {
-  return val;
+function assertNotEqual(val2) {
+  return val2;
 }
 function assertIs(_arg) {
 }
@@ -11433,7 +11433,7 @@ function getEnumValues(entries) {
   return values;
 }
 function joinValues(array2, separator = "|") {
-  return array2.map((val) => stringifyPrimitive(val)).join(separator);
+  return array2.map((val2) => stringifyPrimitive(val2)).join(separator);
 }
 function jsonStringifyReplacer(_, value) {
   if (typeof value === "bigint")
@@ -11461,11 +11461,11 @@ function cleanRegex(source) {
   const end = source.endsWith("$") ? source.length - 1 : source.length;
   return source.slice(start, end);
 }
-function floatSafeRemainder2(val, step) {
-  const valDecCount = (val.toString().split(".")[1] || "").length;
+function floatSafeRemainder2(val2, step) {
+  const valDecCount = (val2.toString().split(".")[1] || "").length;
   const stepDecCount = (step.toString().split(".")[1] || "").length;
   const decCount = valDecCount > stepDecCount ? valDecCount : stepDecCount;
-  const valInt = Number.parseInt(val.toFixed(decCount).replace(".", ""));
+  const valInt = Number.parseInt(val2.toFixed(decCount).replace(".", ""));
   const stepInt = Number.parseInt(step.toFixed(decCount).replace(".", ""));
   return valInt % stepInt / 10 ** decCount;
 }
@@ -12235,8 +12235,8 @@ var $ZodCheckMaxLength = /* @__PURE__ */ $constructor("$ZodCheckMaxLength", (ins
   var _a;
   $ZodCheck.init(inst, def);
   (_a = inst._zod.def).when ?? (_a.when = (payload) => {
-    const val = payload.value;
-    return !nullish(val) && val.length !== void 0;
+    const val2 = payload.value;
+    return !nullish(val2) && val2.length !== void 0;
   });
   inst._zod.onattach.push((inst2) => {
     const curr = inst2._zod.bag.maximum ?? Number.POSITIVE_INFINITY;
@@ -12264,8 +12264,8 @@ var $ZodCheckMinLength = /* @__PURE__ */ $constructor("$ZodCheckMinLength", (ins
   var _a;
   $ZodCheck.init(inst, def);
   (_a = inst._zod.def).when ?? (_a.when = (payload) => {
-    const val = payload.value;
-    return !nullish(val) && val.length !== void 0;
+    const val2 = payload.value;
+    return !nullish(val2) && val2.length !== void 0;
   });
   inst._zod.onattach.push((inst2) => {
     const curr = inst2._zod.bag.minimum ?? Number.NEGATIVE_INFINITY;
@@ -12293,8 +12293,8 @@ var $ZodCheckLengthEquals = /* @__PURE__ */ $constructor("$ZodCheckLengthEquals"
   var _a;
   $ZodCheck.init(inst, def);
   (_a = inst._zod.def).when ?? (_a.when = (payload) => {
-    const val = payload.value;
-    return !nullish(val) && val.length !== void 0;
+    const val2 = payload.value;
+    return !nullish(val2) && val2.length !== void 0;
   });
   inst._zod.onattach.push((inst2) => {
     const bag = inst2._zod.bag;
@@ -13254,8 +13254,8 @@ var $ZodDiscriminatedUnion = /* @__PURE__ */ $constructor("$ZodDiscriminatedUnio
       for (const [k, v] of Object.entries(pv)) {
         if (!propValues[k])
           propValues[k] = /* @__PURE__ */ new Set();
-        for (const val of v) {
-          propValues[k].add(val);
+        for (const val2 of v) {
+          propValues[k].add(val2);
         }
       }
     }
@@ -14566,7 +14566,7 @@ var JSONSchemaGenerator = class {
               ...params,
               path: [...params.path, "allOf", 1]
             });
-            const isSimpleIntersection = (val) => "allOf" in val && Object.keys(val).length === 1;
+            const isSimpleIntersection = (val2) => "allOf" in val2 && Object.keys(val2).length === 1;
             const allOf = [
               ...isSimpleIntersection(a) ? a.allOf : [a],
               ...isSimpleIntersection(b) ? b.allOf : [b]
@@ -14642,27 +14642,27 @@ var JSONSchemaGenerator = class {
           case "literal": {
             const json = _json;
             const vals = [];
-            for (const val of def.values) {
-              if (val === void 0) {
+            for (const val2 of def.values) {
+              if (val2 === void 0) {
                 if (this.unrepresentable === "throw") {
                   throw new Error("Literal `undefined` cannot be represented in JSON Schema");
                 } else {
                 }
-              } else if (typeof val === "bigint") {
+              } else if (typeof val2 === "bigint") {
                 if (this.unrepresentable === "throw") {
                   throw new Error("BigInt literals cannot be represented in JSON Schema");
                 } else {
-                  vals.push(Number(val));
+                  vals.push(Number(val2));
                 }
               } else {
-                vals.push(val);
+                vals.push(val2);
               }
             }
             if (vals.length === 0) {
             } else if (vals.length === 1) {
-              const val = vals[0];
-              json.type = val === null ? "null" : typeof val;
-              json.const = val;
+              const val2 = vals[0];
+              json.type = val2 === null ? "null" : typeof val2;
+              json.const = val2;
             } else {
               if (vals.every((v) => typeof v === "number"))
                 json.type = "number";
@@ -16533,9 +16533,9 @@ var TextResourceContentsSchema = ResourceContentsSchema.extend({
    */
   text: string2()
 });
-var Base64Schema = string2().refine((val) => {
+var Base64Schema = string2().refine((val2) => {
   try {
-    atob(val);
+    atob(val2);
     return true;
   } catch {
     return false;
@@ -17338,7 +17338,7 @@ var ElicitResultSchema = ResultSchema.extend({
    * Per MCP spec, content is "typically omitted" for decline/cancel actions.
    * We normalize null to undefined for leniency while maintaining type compatibility.
    */
-  content: preprocess((val) => val === null ? void 0 : val, record(string2(), union([string2(), number2(), boolean2(), array(string2())])).optional())
+  content: preprocess((val2) => val2 === null ? void 0 : val2, record(string2(), union([string2(), number2(), boolean2(), array(string2())])).optional())
 });
 var ResourceTemplateReferenceSchema = object2({
   type: literal("ref/resource"),
@@ -21667,7 +21667,15 @@ var REGIONS = {
     scope: "fw-fl2-api-nz"
   }
 };
-function loadConfig(env = process.env) {
+function val(v) {
+  return typeof v === "string" && v.trim() && !/^\$\{.*\}$/.test(v.trim()) ? v.trim() : "";
+}
+function loadConfig(rawEnv = process.env) {
+  const env = {};
+  for (const [k, v] of Object.entries(rawEnv)) env[k] = val(v);
+  for (const k of ["CLIENT_ID", "CLIENT_SECRET", "REGION"]) {
+    if (env[`ARAMEX_CFG_${k}`]) env[`ARAMEX_${k}`] = env[`ARAMEX_CFG_${k}`];
+  }
   const region = (env.ARAMEX_REGION || "au").toLowerCase();
   const defaults = REGIONS[region];
   if (!defaults) {
@@ -21752,7 +21760,7 @@ var wrap = (fn) => async (args) => {
 function stripUndefined(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
-var server = new McpServer({ name: "aramex-fastway", version: "0.1.0" });
+var server = new McpServer({ name: "aramex-fastway", version: "0.2.0" });
 server.registerTool(
   "aramex_quote",
   {

@@ -15,7 +15,18 @@ const REGIONS = {
   },
 };
 
-export function loadConfig(env = process.env) {
+// Treat unresolved placeholders like "${user_config.x}" or "${VAR}" as unset.
+function val(v) {
+  return typeof v === "string" && v.trim() && !/^\$\{.*\}$/.test(v.trim()) ? v.trim() : "";
+}
+
+export function loadConfig(rawEnv = process.env) {
+  // Values entered in the plugin's install prompt (ARAMEX_CFG_*) win over env vars.
+  const env = {};
+  for (const [k, v] of Object.entries(rawEnv)) env[k] = val(v);
+  for (const k of ["CLIENT_ID", "CLIENT_SECRET", "REGION"]) {
+    if (env[`ARAMEX_CFG_${k}`]) env[`ARAMEX_${k}`] = env[`ARAMEX_CFG_${k}`];
+  }
   const region = (env.ARAMEX_REGION || "au").toLowerCase();
   const defaults = REGIONS[region];
   if (!defaults) {
