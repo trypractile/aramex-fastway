@@ -1,6 +1,6 @@
 {
   "name": "aramex-fastway-mcp",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "MCP server for the Aramex (Fastway) AU/NZ shipping API",
   "main": "dist/index.mjs",
   "scripts": {

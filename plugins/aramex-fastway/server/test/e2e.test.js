@@ -9,6 +9,34 @@ import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js"
 
 const serverPath = fileURLToPath(new URL("../dist/index.mjs", import.meta.url));
 
+test("without a local key, token request uses a placeholder Basic header", async () => {
+  const seen = [];
+  const http = createServer(async (req, res) => {
+    let body = "";
+    for await (const c of req) body += c;
+    seen.push({ url: req.url, auth: req.headers.authorization, body });
+    if (req.url === "/token") return res.end(JSON.stringify({ access_token: "tok", expires_in: 3600 }));
+    res.end(JSON.stringify({ data: { ok: true }, errors: [] }));
+  });
+  await new Promise((r) => http.listen(0, r));
+  const base = `http://127.0.0.1:${http.address().port}`;
+  const env = { ...process.env, ARAMEX_TOKEN_URL: `${base}/token`, ARAMEX_API_BASE: base };
+  delete env.ARAMEX_CLIENT_ID;
+  delete env.ARAMEX_CLIENT_SECRET;
+  const client = new Client({ name: "test", version: "0" });
+  await client.connect(new StdioClientTransport({ command: process.execPath, args: [serverPath], env }));
+  try {
+    const r = await client.callTool({ name: "aramex_track", arguments: { labelNumber: "ABC123456" } });
+    assert.ok(!r.isError, r.content[0].text);
+    const tok = seen.find((s) => s.url === "/token");
+    assert.match(tok.auth, /^Basic /);
+    assert.doesNotMatch(tok.body, /client_secret/);
+  } finally {
+    await client.close();
+    http.close();
+  }
+});
+
 test("tools work against mock API", async () => {
   const calls = [];
   const http = createServer(async (req, res) => {

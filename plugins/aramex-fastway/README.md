@@ -25,6 +25,28 @@ claude plugin marketplace add trypractile/aramex-fastway
 claude plugin install aramex-fastway@practile-plugins --config aramex_client_id=YOUR_ID --config aramex_client_secret=YOUR_SECRET --config aramex_region=au
 ```
 
+### Option 3: Claude cloud sessions (claude.ai/code, or the Cloud option in the desktop app)
+
+Cloud sessions run in a fresh container each time, so the plugin is installed by the environment's setup script rather than by clicking Install.
+
+1. In Claude, open the cloud environment menu (in the session title bar) and create a new environment, for example `aramex-fastway`.
+2. **Network access**: keep "limited", and add these allowed hosts:
+   ```
+   identity.fastway.org
+   api.myfastway.com.au
+   api.myfastway.co.nz
+   ```
+3. **Setup script**:
+   ```bash
+   claude plugin marketplace add trypractile/aramex-fastway || claude plugin marketplace update practile-plugins
+   claude plugin install aramex-fastway@practile-plugins
+   ```
+4. **API key**, using either method:
+   - **Recommended:** add a *network secret* for host `identity.fastway.org` of type **username and password**. The username is your Aramex client ID and the password is your client secret. The key is stored encrypted and added to the login request by the network proxy. It never appears in the session.
+   - **Or** add environment variables `ARAMEX_CLIENT_ID` and `ARAMEX_CLIENT_SECRET`. Note that these are stored as plain text on the environment.
+   - For New Zealand accounts, also add the environment variable `ARAMEX_REGION=nz`.
+5. Start a new session on that environment and ask, for example, "track Aramex label XXXXXXXX".
+
 ### Getting an API key
 
 In the MyFastway / Aramex customer portal, create an API key. It gives you a client ID and a client secret. Your account must have API access enabled.

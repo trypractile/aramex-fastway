@@ -18,36 +18,38 @@ export class AramexClient {
     this.tokenExpiresAt = 0;
   }
 
-  assertCredentials() {
-    if (!this.config.clientId || !this.config.clientSecret) {
-      throw new AramexError(
-        "Missing Aramex credentials. Set ARAMEX_CLIENT_ID and ARAMEX_CLIENT_SECRET " +
-          "(create an API key in your MyFastway / Aramex portal under API Keys).",
-      );
-    }
-  }
-
   async getToken() {
     // Refresh 60s early to avoid using a token that expires mid-request.
     if (this.token && Date.now() < this.tokenExpiresAt - 60_000) return this.token;
-    this.assertCredentials();
 
-    const body = new URLSearchParams({
-      grant_type: "client_credentials",
-      client_id: this.config.clientId,
-      client_secret: this.config.clientSecret,
-      scope: this.config.scope,
-    });
+    const hasCreds = Boolean(this.config.clientId && this.config.clientSecret);
+    const headers = { "Content-Type": "application/x-www-form-urlencoded" };
+    const body = new URLSearchParams({ grant_type: "client_credentials", scope: this.config.scope });
+    if (hasCreds) {
+      body.set("client_id", this.config.clientId);
+      body.set("client_secret", this.config.clientSecret);
+    } else {
+      // No key configured locally: send a placeholder Basic header. In Claude cloud
+      // environments a network secret saved for identity.fastway.org (username =
+      // client ID, password = secret) replaces it, so the key never sits in env vars.
+      headers.Authorization = `Basic ${Buffer.from("placeholder:placeholder").toString("base64")}`;
+    }
 
     const res = await this.fetch(this.config.tokenUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      headers,
       body,
       signal: AbortSignal.timeout(this.config.timeoutMs),
     });
     const text = await res.text();
     if (!res.ok) {
-      throw new AramexError(`Token request failed (${res.status})`, { status: res.status, body: text });
+      const hint = hasCreds
+        ? ""
+        : " No Aramex API key is configured. Enter it when installing the plugin " +
+          "(/plugin configure aramex-fastway@practile-plugins), set ARAMEX_CLIENT_ID and " +
+          "ARAMEX_CLIENT_SECRET, or in a Claude cloud environment save it as a network " +
+          "secret for identity.fastway.org.";
+      throw new AramexError(`Token request failed (${res.status}).${hint}`, { status: res.status, body: text });
     }
     const json = JSON.parse(text);
     this.token = json.access_token;
