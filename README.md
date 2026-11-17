@@ -20,7 +20,7 @@ Quote, book, label, track and cancel **Aramex Australia / New Zealand** shipment
 3. Install the plugin:
 
    ```bash
-   claude plugin marketplace add <path-or-git-url-of-this-repo>
+   claude plugin marketplace add trypractile/aramex-fastway
    claude plugin install aramex-fastway@practile-plugins
    ```
 
