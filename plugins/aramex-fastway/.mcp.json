@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "aramex": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/server/dist/index.mjs"],
+      "env": {
+        "ARAMEX_CLIENT_ID": "${ARAMEX_CLIENT_ID:-}",
+        "ARAMEX_CLIENT_SECRET": "${ARAMEX_CLIENT_SECRET:-}",
+        "ARAMEX_REGION": "${ARAMEX_REGION:-au}",
+        "ARAMEX_API_BASE": "${ARAMEX_API_BASE:-}",
+        "ARAMEX_TOKEN_URL": "${ARAMEX_TOKEN_URL:-}",
+        "ARAMEX_SCOPE": "${ARAMEX_SCOPE:-}",
+        "ARAMEX_LABEL_DIR": "${ARAMEX_LABEL_DIR:-}"
+      }
+    }
+  }
+}

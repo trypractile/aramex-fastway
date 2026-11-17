@@ -1,0 +1,17 @@
+{
+  "name": "practile-plugins",
+  "owner": {
+    "name": "Practile"
+  },
+  "plugins": [
+    {
+      "name": "aramex-fastway",
+      "source": "./plugins/aramex-fastway",
+      "description": "Aramex (formerly Fastway) AU/NZ shipping: quotes, consignments, labels, tracking.",
+      "version": "0.1.0"
+    }
+  ],
+  "metadata": {
+    "description": "Claude Code plugins by Practile"
+  }
+}

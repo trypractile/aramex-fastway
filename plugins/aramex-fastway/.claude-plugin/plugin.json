@@ -1,0 +1,8 @@
+{
+  "name": "aramex-fastway",
+  "version": "0.1.0",
+  "description": "Quote, book, label, track and cancel Aramex (formerly Fastway) shipments in Australia and New Zealand from Claude Code.",
+  "author": { "name": "Practile" },
+  "license": "MIT",
+  "keywords": ["aramex", "fastway", "shipping", "courier", "logistics", "australia", "new-zealand"]
+}
