@@ -38,9 +38,12 @@ Cloud sessions run in a fresh container each time, so the plugin is installed by
    ```
 3. **Setup script**:
    ```bash
-   claude plugin marketplace add trypractile/aramex-fastway || claude plugin marketplace update practile-plugins
+   claude plugin marketplace add trypractile/aramex-fastway || true
+   claude plugin marketplace update practile-plugins
    claude plugin install aramex-fastway@practile-plugins
+   claude plugin update aramex-fastway@practile-plugins
    ```
+   The `update` lines make sure every new session gets the latest version, even if the environment reuses a container that already has an older one.
 4. **API key**, using either method:
    - **Recommended:** add a *network secret* for host `identity.fastway.org` of type **username and password**. The username is your Aramex client ID and the password is your client secret. The key is stored encrypted and added to the login request by the network proxy. It never appears in the session.
    - **Or** add environment variables `ARAMEX_CLIENT_ID` and `ARAMEX_CLIENT_SECRET`. Note that these are stored as plain text on the environment.
