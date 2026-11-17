@@ -3,10 +3,10 @@ import assert from "node:assert/strict";
 import { loadConfig } from "../src/config.js";
 
 test("install-prompt values win over env vars", () => {
-  const c = loadConfig({ ARAMEX_CLIENT_ID: "env-id", ARAMEX_CFG_CLIENT_ID: "cfg-id", ARAMEX_CFG_REGION: "nz" });
+  const c = loadConfig({ ARAMEX_CLIENT_ID: "env-id", ARAMEX_CFG_CLIENT_ID: "cfg-id", ARAMEX_CFG_REGION: "au" });
   assert.equal(c.clientId, "cfg-id");
-  assert.equal(c.region, "nz");
-  assert.equal(c.scope, "fw-fl2-api-nz");
+  assert.equal(c.region, "au");
+  assert.equal(c.scope, "fw-fl2-api-au");
 });
 
 test("unresolved placeholders fall back to env vars / defaults", () => {
@@ -17,6 +17,6 @@ test("unresolved placeholders fall back to env vars / defaults", () => {
     ARAMEX_API_BASE: "${ARAMEX_API_BASE}",
   });
   assert.equal(c.clientId, "env-id");
-  assert.equal(c.region, "au");
-  assert.equal(c.apiBase, "https://api.myfastway.com.au");
+  assert.equal(c.region, "nz");
+  assert.equal(c.apiBase, "https://api.myfastway.co.nz");
 });

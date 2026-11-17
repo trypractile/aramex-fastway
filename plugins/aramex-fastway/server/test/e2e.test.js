@@ -45,7 +45,7 @@ test("tools work against mock API", async () => {
     calls.push({ method: req.method, url: req.url, auth: req.headers.authorization, body });
     if (req.url === "/token") {
       assert.match(body, /grant_type=client_credentials/);
-      assert.match(body, /scope=fw-fl2-api-au/);
+      assert.match(body, /scope=fw-fl2-api-nz/);
       res.end(JSON.stringify({ access_token: "tok", expires_in: 3600 }));
     } else if (req.url.startsWith("/api/track/label/")) {
       res.end(JSON.stringify({ data: { status: "Delivered" }, errors: [] }));
@@ -101,7 +101,7 @@ test("tools work against mock API", async () => {
     });
     assert.ok(!quote.isError, quote.content[0].text);
     const sent = JSON.parse(calls.find((c) => c.url === "/api/consignments/quote").body);
-    assert.equal(sent.To.Address.Country, "AU");
+    assert.equal(sent.To.Address.Country, "NZ");
     assert.equal(sent.Items[0].Quantity, 1);
 
     const labels = await client.callTool({ name: "aramex_get_labels", arguments: { consignmentId: 42 } });

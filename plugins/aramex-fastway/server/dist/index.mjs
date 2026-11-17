@@ -21672,7 +21672,7 @@ function loadConfig(rawEnv = process.env) {
   for (const k of ["CLIENT_ID", "CLIENT_SECRET", "REGION"]) {
     if (env[`ARAMEX_CFG_${k}`]) env[`ARAMEX_${k}`] = env[`ARAMEX_CFG_${k}`];
   }
-  const region = (env.ARAMEX_REGION || "au").toLowerCase();
+  const region = (env.ARAMEX_REGION || "nz").toLowerCase();
   const defaults = REGIONS[region];
   if (!defaults) {
     throw new Error(`ARAMEX_REGION must be "au" or "nz" (got "${env.ARAMEX_REGION}")`);
@@ -21756,7 +21756,7 @@ var wrap = (fn) => async (args) => {
 function stripUndefined(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
-var server = new McpServer({ name: "aramex-fastway", version: "0.3.0" });
+var server = new McpServer({ name: "aramex-fastway", version: "0.4.0" });
 server.registerTool(
   "aramex_quote",
   {

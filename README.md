@@ -13,7 +13,7 @@ Quote, book, label, track and cancel **Aramex Australia / New Zealand** shipment
 1. Open the **Code** tab and start a local session.
 2. In the prompt box, type `/plugin marketplace add trypractile/aramex-fastway` and press Enter.
 3. Click **+** next to the prompt box, then **Add plugins** (or **Plugins → Browse plugins**), choose **aramex-fastway** and click Install.
-4. When asked, paste your **Aramex client ID** and **client secret**, and pick the region (`au` or `nz`). The secret is saved in your computer's secure credential store, not in a settings file.
+4. When asked, paste your **Aramex client ID** and **client secret**, and pick the region (`nz` is the default; choose `au` for Australia). The secret is saved in your computer's secure credential store, not in a settings file.
 5. Start a new session and try `/aramex-track <label number>`.
 
 To change the key later, type `/plugin configure aramex-fastway@practile-plugins`.
@@ -22,7 +22,7 @@ To change the key later, type `/plugin configure aramex-fastway@practile-plugins
 
 ```bash
 claude plugin marketplace add trypractile/aramex-fastway
-claude plugin install aramex-fastway@practile-plugins --config aramex_client_id=YOUR_ID --config aramex_client_secret=YOUR_SECRET --config aramex_region=au
+claude plugin install aramex-fastway@practile-plugins --config aramex_client_id=YOUR_ID --config aramex_client_secret=YOUR_SECRET --config aramex_region=nz
 ```
 
 ### Option 3: Claude cloud sessions (claude.ai/code, or the Cloud option in the desktop app)
@@ -44,7 +44,7 @@ Cloud sessions run in a fresh container each time, so the plugin is installed by
 4. **API key**, using either method:
    - **Recommended:** add a *network secret* for host `identity.fastway.org` of type **username and password**. The username is your Aramex client ID and the password is your client secret. The key is stored encrypted and added to the login request by the network proxy. It never appears in the session.
    - **Or** add environment variables `ARAMEX_CLIENT_ID` and `ARAMEX_CLIENT_SECRET`. Note that these are stored as plain text on the environment.
-   - For New Zealand accounts, also add the environment variable `ARAMEX_REGION=nz`.
+   - The plugin defaults to New Zealand. For Australian accounts, add the environment variable `ARAMEX_REGION=au`.
 5. Start a new session on that environment and ask, for example, "track Aramex label XXXXXXXX".
 
 ### Getting an API key
@@ -59,10 +59,10 @@ You can also supply the key as the environment variables `ARAMEX_CLIENT_ID`, `AR
 
 | Variable | Default |
 |---|---|
-| `ARAMEX_REGION` | `au` (`nz` switches base URL and scope) |
-| `ARAMEX_API_BASE` | `https://api.myfastway.com.au` (AU) / `https://api.myfastway.co.nz` (NZ) |
+| `ARAMEX_REGION` | `nz` (`au` switches base URL and scope) |
+| `ARAMEX_API_BASE` | `https://api.myfastway.co.nz` (NZ) / `https://api.myfastway.com.au` (AU) |
 | `ARAMEX_TOKEN_URL` | `https://identity.fastway.org/connect/token` |
-| `ARAMEX_SCOPE` | `fw-fl2-api-au` / `fw-fl2-api-nz` |
+| `ARAMEX_SCOPE` | `fw-fl2-api-nz` / `fw-fl2-api-au` |
 | `ARAMEX_LABEL_DIR` | OS temp dir + `/aramex-labels` |
 | `ARAMEX_TIMEOUT_MS` | `30000` |
 

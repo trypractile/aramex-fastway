@@ -1,6 +1,6 @@
 {
   "name": "aramex-fastway",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Quote, book, label, track and cancel Aramex (formerly Fastway) shipments in Australia and New Zealand from Claude Code.",
   "author": {
     "name": "Practile"
@@ -33,9 +33,9 @@
     "aramex_region": {
       "type": "string",
       "title": "Region",
-      "description": "au for Australia, nz for New Zealand",
+      "description": "nz for New Zealand (default), au for Australia",
       "required": false,
-      "default": "au",
+      "default": "nz",
       "options": [
         "au",
         "nz"

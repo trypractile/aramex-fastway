@@ -8,7 +8,7 @@
       "env": {
         "ARAMEX_CLIENT_ID": "${ARAMEX_CLIENT_ID:-}",
         "ARAMEX_CLIENT_SECRET": "${ARAMEX_CLIENT_SECRET:-}",
-        "ARAMEX_REGION": "${ARAMEX_REGION:-au}",
+        "ARAMEX_REGION": "${ARAMEX_REGION:-nz}",
         "ARAMEX_API_BASE": "${ARAMEX_API_BASE:-}",
         "ARAMEX_TOKEN_URL": "${ARAMEX_TOKEN_URL:-}",
         "ARAMEX_SCOPE": "${ARAMEX_SCOPE:-}",
