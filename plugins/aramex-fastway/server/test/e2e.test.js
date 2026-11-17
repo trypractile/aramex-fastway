@@ -54,6 +54,8 @@ test("tools work against mock API", async () => {
     } else if (req.url.startsWith("/api/consignments/42/labels")) {
       res.setHeader("content-type", "application/pdf");
       res.end("%PDF-1.4 fake");
+    } else if (req.url.startsWith("/api/consignments?")) {
+      res.end(JSON.stringify({ data: [{ conId: 1 }, { conId: 2 }], errors: [] }));
     } else if (req.url === "/api/consignments/99") {
       res.statusCode = 404;
       res.end(JSON.stringify({ errors: [{ message: "not found" }] }));
@@ -84,7 +86,7 @@ test("tools work against mock API", async () => {
     const { tools } = await client.listTools();
     assert.deepEqual(tools.map((t) => t.name).sort(), [
       "aramex_api_request", "aramex_cancel_consignment", "aramex_create_consignment",
-      "aramex_get_consignment", "aramex_get_labels", "aramex_quote", "aramex_track",
+      "aramex_get_consignment", "aramex_get_labels", "aramex_list_consignments", "aramex_quote", "aramex_track",
       "aramex_validate_address",
     ]);
 
@@ -103,6 +105,17 @@ test("tools work against mock API", async () => {
     const sent = JSON.parse(calls.find((c) => c.url === "/api/consignments/quote").body);
     assert.equal(sent.To.Address.Country, "NZ");
     assert.equal(sent.Items[0].Quantity, 1);
+
+    const list = await client.callTool({
+      name: "aramex_list_consignments",
+      arguments: { pageSize: 20, fromDate: "2026-11-01", filters: { reference: "ORDER-1" } },
+    });
+    assert.ok(!list.isError, list.content[0].text);
+    assert.equal(JSON.parse(list.content[0].text).length, 2);
+    const listUrl = new URL(calls.find((c) => c.url.startsWith("/api/consignments?")).url, "http://x");
+    assert.equal(listUrl.searchParams.get("pageSize"), "20");
+    assert.equal(listUrl.searchParams.get("fromDate"), "2026-11-01");
+    assert.equal(listUrl.searchParams.get("reference"), "ORDER-1");
 
     const labels = await client.callTool({ name: "aramex_get_labels", arguments: { consignmentId: 42 } });
     const { savedTo } = JSON.parse(labels.content[0].text);

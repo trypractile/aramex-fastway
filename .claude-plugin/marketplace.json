@@ -8,7 +8,7 @@
       "name": "aramex-fastway",
       "source": "./plugins/aramex-fastway",
       "description": "Aramex (formerly Fastway) AU/NZ shipping: quotes, consignments, labels, tracking.",
-      "version": "0.4.0"
+      "version": "0.5.0"
     }
   ],
   "metadata": {

@@ -2,7 +2,7 @@
 
 Quote, book, label, track and cancel **Aramex Australia / New Zealand** shipments from Claude Code. Aramex AU/NZ was formerly Fastway Couriers. The plugin includes:
 
-- **MCP server `aramex`** with 8 tools: `aramex_quote`, `aramex_create_consignment`, `aramex_get_consignment`, `aramex_cancel_consignment`, `aramex_get_labels`, `aramex_track`, `aramex_validate_address`, and a raw `aramex_api_request` escape hatch.
+- **MCP server `aramex`** with 9 tools: `aramex_quote`, `aramex_create_consignment`, `aramex_list_consignments`, `aramex_get_consignment`, `aramex_cancel_consignment`, `aramex_get_labels`, `aramex_track`, `aramex_validate_address`, and a raw `aramex_api_request` escape hatch.
 - **Skill `aramex-shipping`**: teaches Claude the quote → confirm → book → label workflow and safety rules, such as never booking or cancelling without your confirmation.
 - **Slash commands**: `/aramex-track <label…>`, `/aramex-quote <dest> <kg> [dims]`, `/aramex-ship [details]`.
 

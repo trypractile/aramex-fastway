@@ -13,6 +13,7 @@ The `aramex` MCP server wraps the Aramex AU/NZ API (formerly MyFastway). Tools:
 | `aramex_quote` | Price and services for a shipment | none |
 | `aramex_validate_address` | Check or normalise an address | none |
 | `aramex_create_consignment` | Book a shipment and get label numbers | **creates a billable consignment** |
+| `aramex_list_consignments` | List or search recent consignments (paging, dates, filters) | none |
 | `aramex_get_consignment` | Look up a booked consignment | none |
 | `aramex_get_labels` | Save the label PDF to disk | writes a file |
 | `aramex_cancel_consignment` | Cancel a consignment before pickup | **irreversible** |

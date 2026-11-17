@@ -49,6 +49,7 @@ export function loadConfig(rawEnv = process.env) {
 export const ENDPOINTS = {
   quote: () => "/api/consignments/quote",
   createConsignment: () => "/api/consignments",
+  listConsignments: () => "/api/consignments",
   getConsignment: (id) => `/api/consignments/${id}`,
   cancelConsignment: (id, reasonId) => `/api/consignments/${id}/reason/${reasonId}`,
   labels: (id) => `/api/consignments/${id}/labels`,

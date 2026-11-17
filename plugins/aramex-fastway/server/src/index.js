@@ -81,7 +81,7 @@ function stripUndefined(obj) {
 
 // ---------- server ----------
 
-const server = new McpServer({ name: "aramex-fastway", version: "0.4.0" });
+const server = new McpServer({ name: "aramex-fastway", version: "0.5.0" });
 
 server.registerTool(
   "aramex_quote",
@@ -106,6 +106,30 @@ server.registerTool(
     annotations: { destructiveHint: false, idempotentHint: false },
   },
   wrap((args) => client.request("POST", ENDPOINTS.createConsignment(), { body: stripUndefined(args) })),
+);
+
+server.registerTool(
+  "aramex_list_consignments",
+  {
+    title: "List consignments",
+    description:
+      "List consignments booked on the Aramex account, newest first if the API sorts that way. " +
+      "Supports paging and date filters; pass any other filters the API accepts via 'filters'.",
+    inputSchema: {
+      pageNumber: z.number().int().positive().optional().describe("Page to return (1-based)"),
+      pageSize: z.number().int().positive().max(500).optional().describe("Results per page"),
+      fromDate: z.string().optional().describe("Only consignments created on/after this date (YYYY-MM-DD)"),
+      toDate: z.string().optional().describe("Only consignments created on/before this date (YYYY-MM-DD)"),
+      filters: z
+        .record(z.union([z.string(), z.number(), z.boolean()]))
+        .optional()
+        .describe("Extra query-string filters passed through as-is, e.g. { reference: 'ORDER-123' }"),
+    },
+    annotations: { readOnlyHint: true },
+  },
+  wrap(({ filters, ...known }) =>
+    client.request("GET", ENDPOINTS.listConsignments(), { query: { ...known, ...(filters || {}) } }),
+  ),
 );
 
 server.registerTool(

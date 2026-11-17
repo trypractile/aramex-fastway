@@ -21691,6 +21691,7 @@ function loadConfig(rawEnv = process.env) {
 var ENDPOINTS = {
   quote: () => "/api/consignments/quote",
   createConsignment: () => "/api/consignments",
+  listConsignments: () => "/api/consignments",
   getConsignment: (id) => `/api/consignments/${id}`,
   cancelConsignment: (id, reasonId) => `/api/consignments/${id}/reason/${reasonId}`,
   labels: (id) => `/api/consignments/${id}/labels`,
@@ -21756,7 +21757,7 @@ var wrap = (fn) => async (args) => {
 function stripUndefined(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
-var server = new McpServer({ name: "aramex-fastway", version: "0.4.0" });
+var server = new McpServer({ name: "aramex-fastway", version: "0.5.0" });
 server.registerTool(
   "aramex_quote",
   {
@@ -21776,6 +21777,24 @@ server.registerTool(
     annotations: { destructiveHint: false, idempotentHint: false }
   },
   wrap((args) => client.request("POST", ENDPOINTS.createConsignment(), { body: stripUndefined(args) }))
+);
+server.registerTool(
+  "aramex_list_consignments",
+  {
+    title: "List consignments",
+    description: "List consignments booked on the Aramex account, newest first if the API sorts that way. Supports paging and date filters; pass any other filters the API accepts via 'filters'.",
+    inputSchema: {
+      pageNumber: external_exports.number().int().positive().optional().describe("Page to return (1-based)"),
+      pageSize: external_exports.number().int().positive().max(500).optional().describe("Results per page"),
+      fromDate: external_exports.string().optional().describe("Only consignments created on/after this date (YYYY-MM-DD)"),
+      toDate: external_exports.string().optional().describe("Only consignments created on/before this date (YYYY-MM-DD)"),
+      filters: external_exports.record(external_exports.union([external_exports.string(), external_exports.number(), external_exports.boolean()])).optional().describe("Extra query-string filters passed through as-is, e.g. { reference: 'ORDER-123' }")
+    },
+    annotations: { readOnlyHint: true }
+  },
+  wrap(
+    ({ filters, ...known }) => client.request("GET", ENDPOINTS.listConsignments(), { query: { ...known, ...filters || {} } })
+  )
 );
 server.registerTool(
   "aramex_get_consignment",
